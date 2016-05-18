@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +14,9 @@ import com.example.repository.TestDomainRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestController2 {
+@Controller 
+@RequestMapping("/rest")
+public class RestTestController {
 
 	@Autowired
 	private TestDomainRepository testDomainRepository;

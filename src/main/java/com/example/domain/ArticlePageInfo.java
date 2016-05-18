@@ -8,11 +8,11 @@ import org.springframework.data.domain.Page;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ArticlePageInfo {
+public class ArticlePageInfo<T> {
 
 	private static int numArticlePerPage = 10; //페이지당 아티클 갯수 
 	private static final int numPages = 10; // 페이지 갯수
-	private List<?> content;
+	private List<T> content;
 	// 페이징
 	private int numTotalPage; // 총 페이지 수
 	private int beginPage; // 페이지 하단의 링크에 쓰일 시작 페이지
@@ -21,7 +21,7 @@ public class ArticlePageInfo {
 	private boolean previous;
 	private boolean next;
 
-	public ArticlePageInfo(Page<?> pageBoard){
+	public ArticlePageInfo(Page<T> pageBoard){
 		this.numTotalPage = pageBoard.getTotalPages();
 		this.beginPage = pageBoard.getNumber() / numArticlePerPage * numArticlePerPage + 1;
 		this.endPage = (beginPage + numArticlePerPage - 1) > numTotalPage ? numTotalPage : beginPage + numArticlePerPage - 1;
@@ -44,7 +44,7 @@ public class ArticlePageInfo {
 		return content;
 	}
 
-	public void setContent(List<?> content) {
+	public void setContent(List<T> content) {
 		this.content = content;
 	}
 

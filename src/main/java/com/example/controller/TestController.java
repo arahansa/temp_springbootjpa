@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.domain.ArticlePageInfo;
 import com.example.domain.TestDomain;
@@ -29,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class TestController {
 
-	
 	@Bean
 	public InitializingBean initializingBean(){
 		return () -> {
@@ -42,19 +38,14 @@ public class TestController {
 	}
 	
 	@Autowired
-	TestDomainRepository testDomainRepository;
+	private TestDomainRepository testDomainRepository;
 	
 	private static final String ID = "id";
 	public static int sizeDefault = 10;
 	
 	@RequestMapping(value = "/")
 	public String index(Model model) {
-		Pageable pageable = new PageRequest(0, sizeDefault);
-		Page<TestDomain> pageBoard =testDomainRepository.findAll(pageable);
-		
-		ArticlePageInfo articlePageInfo = new ArticlePageInfo(pageBoard);
-		model.addAttribute("list", articlePageInfo);
-		return "index";
+		return page(1, model);
 	}
 	
 	@RequestMapping("/page/{page}")
@@ -63,7 +54,7 @@ public class TestController {
 		Pageable pageable = new PageRequest(page-1, sizeDefault, sort);
 		Page<TestDomain> pageBoard =testDomainRepository.findAll(pageable);
 		
-		ArticlePageInfo articlePageInfo = new ArticlePageInfo(pageBoard);
+		ArticlePageInfo<TestDomain> articlePageInfo = new ArticlePageInfo<TestDomain>(pageBoard);
 		model.addAttribute("list", articlePageInfo);
 		return "index";
 	}
@@ -74,8 +65,5 @@ public class TestController {
 		testDomainRepository.save(testDomain);
 		return "redirect:/";
 	}
-	
-	
-	
 	
 }
